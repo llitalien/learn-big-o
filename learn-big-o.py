@@ -60,5 +60,25 @@ if __name__ == "__main__":
     array = sorting_app.generate_array(50)
     print(array)
     
+    # Average / Random case
+    print "Average (random) case!"
     sorting_app.naiveSort(list(array))
     sorting_app.insertSort(list(array))
+
+    # Alright, let's see worst case
+    print "Worst case run!"
+    array_worst = sorting_app.generate_array(50)
+    array_worst.sort()
+    array_worst.reverse()
+
+    sorting_app.naiveSort(list(array_worst))
+    sorting_app.insertSort(list(array_worst))
+
+    # Alright, let's see best case
+    print "Best case run!"
+    array_worst = sorting_app.generate_array(50)
+    array_worst.sort()
+
+    sorting_app.naiveSort(list(array_worst))
+    sorting_app.insertSort(list(array_worst))
+
