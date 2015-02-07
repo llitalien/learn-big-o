@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
     # Alright, let's see worst case
     print "Worst case run!"
-    array_worst = sorting_app.generate_array(50)
+    array_worst = list(array)
     array_worst.sort()
     array_worst.reverse()
 
@@ -76,9 +76,9 @@ if __name__ == "__main__":
 
     # Alright, let's see best case
     print "Best case run!"
-    array_worst = sorting_app.generate_array(50)
-    array_worst.sort()
+    array_best = list(array)
+    array_best.sort()
 
-    sorting_app.naiveSort(list(array_worst))
-    sorting_app.insertSort(list(array_worst))
+    sorting_app.naiveSort(list(array_best))
+    sorting_app.insertSort(list(array_best))
 
