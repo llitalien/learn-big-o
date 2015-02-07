@@ -44,7 +44,7 @@ class DifferentSortingAlgorithms:
                 # Insert
                 array[pos] = array[pos-1]
                 pos -= 1
-                nb_read_instructions += 1
+                nb_read_instructions += 2
                 nb_inserts += 1
 
             array[pos] = current
@@ -52,6 +52,22 @@ class DifferentSortingAlgorithms:
         print "Read Instructions required to insert sort array -> " + str(nb_read_instructions)
         print "Insert Instructions required to insert sort array -> " + str(nb_inserts)
         print(array)
+
+    def mergeSort(self, array):
+
+        nb_read_instructions = 0
+        
+        # Done case
+        if array.len == 1:
+            return array
+
+        half_size = array.len / 2
+        
+        print "Read Instructions required to insert sort array -> " + str(nb_read_instructions)
+        print "Insert Instructions required to insert sort array -> " + str(nb_inserts)
+        print(array)
+
+
 
 if __name__ == "__main__":
 
