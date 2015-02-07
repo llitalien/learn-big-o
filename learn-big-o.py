@@ -7,7 +7,7 @@ class DifferentSortingAlgorithms:
         return array
 
     def naiveSort(self, array):
-        nb_read_instructions = 0
+        nb_compare = 0
         nb_substitutions = 0
 
         # First pass over the entire array
@@ -20,23 +20,21 @@ class DifferentSortingAlgorithms:
                     array[t] = array[t+1]
                     array[t+1] = temp
                     nb_substitutions += 1
-                # On lit deux valeurs a chaque fois
-                nb_read_instructions += 2 
+                nb_compare += 1
 
-        print "Read Instructions required to naive sort array -> " + str(nb_read_instructions)
+        print "Compare Instructions required to naive sort array -> " + str(nb_compare)
         print "Swap Instructions required to naive sort array -> " + str(nb_substitutions)
         print(array)
 
     def insertSort(self, array):
 
-        nb_read_instructions = 0
+        nb_compare = 0
         nb_inserts = 0
 
         # First pass over the entire array from 1 to the length
         for i in range(1,len(array)):
             # Save current
             current = array[i]
-            nb_read_instructions += 1
             pos = i
 
             # Assume anything below index has been sorted
@@ -44,12 +42,12 @@ class DifferentSortingAlgorithms:
                 # Insert
                 array[pos] = array[pos-1]
                 pos -= 1
-                nb_read_instructions += 2
                 nb_inserts += 1
+                nb_compare += 1
 
             array[pos] = current
         
-        print "Read Instructions required to insert sort array -> " + str(nb_read_instructions)
+        print "Compare Instructions required to insert sort array -> " + str(nb_compare)
         print "Insert Instructions required to insert sort array -> " + str(nb_inserts)
         print(array)
 
@@ -63,7 +61,7 @@ class DifferentSortingAlgorithms:
 
         half_size = array.len / 2
         
-        print "Read Instructions required to insert sort array -> " + str(nb_read_instructions)
+        print "Compare Instructions required to insert sort array -> " + str(nb_compare)
         print "Insert Instructions required to insert sort array -> " + str(nb_inserts)
         print(array)
 
