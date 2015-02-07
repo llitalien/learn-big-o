@@ -2,40 +2,63 @@ import random
 
 class DifferentSortingAlgorithms:
 
-    def __init__(self):
-        self.array = []
-
     def generate_array(self, size):
-        self.array = random.sample(xrange(1,size*2), size)
-        print(self.array)
+        array = random.sample(xrange(1,size*2), size)
+        return array
 
-    def naiveSort(self):
+    def naiveSort(self, array):
         nb_read_instructions = 0
         nb_substitutions = 0
-        index = 0
-        current = 0
-        resulting_array = []
 
         # First pass over the entire array
-        for x in range(len(self.array)-1,0,-1):
+        for x in range(len(array)-1,0,-1):
             # Pass over the non sorted values
             for t in range(x):
-                if self.array[t] > self.array[t+1]:
-                    temp = self.array[t]
+                if array[t] > array[t+1]:
+                    temp = array[t]
                     # Swap
-                    self.array[t] = self.array[t+1]
-                    self.array[t+1] = temp
+                    array[t] = array[t+1]
+                    array[t+1] = temp
                     nb_substitutions += 1
                 # On lit deux valeurs a chaque fois
                 nb_read_instructions += 2 
 
-        print "Read Instructions required to sort array -> " + str(nb_read_instructions)
-        print "Swap Instructions required to sort array -> " + str(nb_substitutions)
-        print(self.array)
+        print "Read Instructions required to naive sort array -> " + str(nb_read_instructions)
+        print "Swap Instructions required to naive sort array -> " + str(nb_substitutions)
+        print(array)
+
+    def insertSort(self, array):
+
+        nb_read_instructions = 0
+        nb_inserts = 0
+
+        # First pass over the entire array from 1 to the length
+        for i in range(1,len(array)):
+            # Save current
+            current = array[i]
+            nb_read_instructions += 1
+            pos = i
+
+            # Assume anything below index has been sorted
+            while pos > 0 and array[pos-1] > current:
+                # Insert
+                array[pos] = array[pos-1]
+                pos -= 1
+                nb_read_instructions += 1
+                nb_inserts += 1
+
+            array[pos] = current
+        
+        print "Read Instructions required to insert sort array -> " + str(nb_read_instructions)
+        print "Insert Instructions required to insert sort array -> " + str(nb_inserts)
+        print(array)
 
 if __name__ == "__main__":
 
     sorting_app = DifferentSortingAlgorithms();
 
-    sorting_app.generate_array(50)
-    sorting_app.naiveSort()
+    array = sorting_app.generate_array(50)
+    print(array)
+    
+    sorting_app.naiveSort(list(array))
+    sorting_app.insertSort(list(array))
