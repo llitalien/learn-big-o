@@ -2,12 +2,15 @@ import random
 
 class DifferentSortingAlgorithms:
 
+    m_MergeSortReadInstructions = 0
+    m_MergeSortInsertInstructions = 0
+
     def generate_array(self, size):
         array = random.sample(xrange(1,size*2), size)
         return array
 
     def naiveSort(self, array):
-        nb_compare = 0
+        nb_read_instructions = 0
         nb_substitutions = 0
 
         # First pass over the entire array
@@ -20,21 +23,23 @@ class DifferentSortingAlgorithms:
                     array[t] = array[t+1]
                     array[t+1] = temp
                     nb_substitutions += 1
-                nb_compare += 1
+                # On lit deux valeurs a chaque fois
+                nb_read_instructions += 2 
 
-        print "Compare Instructions required to naive sort array -> " + str(nb_compare)
+        print "Read Instructions required to naive sort array -> " + str(nb_read_instructions)
         print "Swap Instructions required to naive sort array -> " + str(nb_substitutions)
         print(array)
 
     def insertSort(self, array):
 
-        nb_compare = 0
+        nb_read_instructions = 0
         nb_inserts = 0
 
         # First pass over the entire array from 1 to the length
         for i in range(1,len(array)):
             # Save current
             current = array[i]
+            nb_read_instructions += 1
             pos = i
 
             # Assume anything below index has been sorted
@@ -42,30 +47,57 @@ class DifferentSortingAlgorithms:
                 # Insert
                 array[pos] = array[pos-1]
                 pos -= 1
+                nb_read_instructions += 1
                 nb_inserts += 1
-                nb_compare += 1
 
             array[pos] = current
         
-        print "Compare Instructions required to insert sort array -> " + str(nb_compare)
+        print "Read Instructions required to insert sort array -> " + str(nb_read_instructions)
         print "Insert Instructions required to insert sort array -> " + str(nb_inserts)
         print(array)
 
     def mergeSort(self, array):
 
-        nb_read_instructions = 0
-        
-        # Done case
-        if array.len == 1:
-            return array
+        if len(array) > 1:
+            mid = len(array)//2
+            lefthalf = array[:mid]
+            righthalf = array[mid:]
+            self.m_MergeSortReadInstructions +=2
+            self.m_MergeSortInsertInstructions += 3
+               
+            self.mergeSort(lefthalf)
+            self.mergeSort(righthalf)
 
-        half_size = array.len / 2
-        
-        print "Compare Instructions required to insert sort array -> " + str(nb_compare)
-        print "Insert Instructions required to insert sort array -> " + str(nb_inserts)
-        print(array)
+            i=0
+            j=0
+            k=0
+            while i<len(lefthalf) and j<len(righthalf):
+                if lefthalf[i]<righthalf[j]:
+                    array[k]=lefthalf[i]
+                    i=i+1
+                    self.m_MergeSortReadInstructions += 2
+                    self.m_MergeSortInsertInstructions += 1
+                else:
+                    array[k]=righthalf[j]
+                    j=j+1
+                    self.m_MergeSortReadInstructions += 1
+                    self.m_MergeSortInsertInstructions += 1
+                    k=k+1
 
+            while i<len(lefthalf):
+                array[k]=lefthalf[i]
+                self.m_MergeSortReadInstructions += 1
+                self.m_MergeSortInsertInstructions += 1
+                i=i+1
+                k=k+1
 
+            while j<len(righthalf):
+                array[k]=righthalf[j]
+                j=j+1
+                k=k+1
+                self.m_MergeSortReadInstructions += 1
+	    
+      
 
 if __name__ == "__main__":
 
@@ -78,6 +110,7 @@ if __name__ == "__main__":
     print "Average (random) case!"
     sorting_app.naiveSort(list(array))
     sorting_app.insertSort(list(array))
+    sorting_app.mergeSort(list(array))
 
     # Alright, let's see worst case
     print "Worst case run!"
@@ -85,14 +118,28 @@ if __name__ == "__main__":
     array_worst.sort()
     array_worst.reverse()
 
-    sorting_app.naiveSort(list(array_worst))
-    sorting_app.insertSort(list(array_worst))
+    sorting_app.m_MergeSortReadInstructions = 0
+    sorting_app.m_MergeSortInsertInstructions = 0
 
-    # Alright, let's see best case
+    #sorting_app.naiveSort(list(array_worst))
+    #sorting_app.insertSort(list(array_worst))
+    sorting_app.mergeSort(list(array_worst))
+
+    print "Read Instructions required to MergeSort array -> " + str(sorting_app.m_MergeSortReadInstructions)
+    print "Insert Instructions required to MergeSort array -> " + str(sorting_app.m_MergeSortInsertInstructions)
+    
+    sorting_app.m_MergeSortReadInstructions = 0
+    sorting_app.m_MergeSortInsertInstructions = 0
+
+   # Alright, let's see best case
     print "Best case run!"
     array_best = list(array)
     array_best.sort()
 
-    sorting_app.naiveSort(list(array_best))
-    sorting_app.insertSort(list(array_best))
+    #sorting_app.naiveSort(list(array_best))
+    #sorting_app.insertSort(list(array_best))
+    sorting_app.mergeSort(list(array_best))
+
+    print "Read Instructions required to MergeSort array -> " + str(sorting_app.m_MergeSortReadInstructions)
+    print "Insert Instructions required to MergeSort array -> " + str(sorting_app.m_MergeSortInsertInstructions)
 
